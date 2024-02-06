@@ -11,79 +11,197 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
         crossorigin="anonymous">
 
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
-
     <title>Contact Manager</title>
+
+    <style>
+        body {
+            background-color: #D2F3FF;
+            color: #001E3E;
+            font-family: 'Arial', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .banner {
+            position: relative;
+            background-color: #001E3E;
+            padding: 5px;
+            display: flex;
+            align-items: center; /* Center vertically */
+            justify-content: space-between;
+        }
+    
+        .logout-btn {
+            position: absolute;
+            top: 50%; /* Adjust the vertical position */
+            right: 35px;
+            transform: translateY(-50%); /* Center the button using transform */
+        }
+    
+        .logo {
+            max-width: 150px; /* Adjust the logo size as needed */
+            vertical-align: middle;
+        }
+    
+        /* Center the welcome message horizontally */
+        .navbar-text {
+            color: #fff;
+            vertical-align: middle;
+            font-size: 18px; /* Adjust the font size as needed */
+            text-align: center; /* Center the text within its container */
+            width: 100%; /* Set width to 100% for centering */
+        }
+    
+        .container {
+            max-width: 1200px; /* Increase the max-width as needed */
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+    
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-top: -10px;
+        }
+    
+        .card-body {
+            padding: 20px; /* Add padding to the card body */
+        }
+    
+        .list-group-item {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+    }
+
+    .list-group-item div {
+        display: inline-block;
+        margin-right: 10px; /* Add margin to create space between items */
+    }
+
+    .list-group-item button {
+        margin-left: auto; /* Push the buttons to the right */
+    }
+    
+        .card-header {
+            background-color: #001E3E;
+            color: #fff;
+            text-align: center;
+            border-bottom: none;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+        }
+    
+        .form-floating {
+            margin-bottom: 15px;
+        }
+    
+        .form-floating label {
+            color: #001E3E;
+        }
+    
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+            border-radius: 5px;
+        }
+    
+        .btn-primary:hover {
+            background-color: #001E3E;
+        }
+    
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+        }
+    
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+    
+        .btn-link {
+            color: #007bff;
+        }
+    
+        .search-bar {
+            margin-bottom: 20px;
+        }
+    </style>
+    
 </head>
 
-<body class="text-center">
+<body>
 
-    <main class="form-signin">
+    <div class="banner">
+        <img src="css/logo-Denver-Nuggets.png" alt="Nuggets Logo" class="logo">
+        <div class="navbar-text" id="welcomeGreeting"></div>
+        <button class="btn btn-danger logout-btn" type="button" onclick="logout()">Log Out</button>
+    </div>
 
-        <!-- Contact Manager Form -->
-        <form id="contactManagerForm">
-            <!-- Welcome Greeting -->
-            <h1 class="h3 mb-3 fw-normal" id="welcomeGreeting">Welcome!</h1>
-
-            <!-- Search Contacts -->
-            <div class="mb-3">
-                <input type="text" class="form-control" id="searchInput" placeholder="Search Contacts"
-                    oninput="searchContacts()">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Contact Manager</h3>
             </div>
+            <div class="card-body">
+                <!-- Add New Contact Section -->
+                <div class="mb-3">
+                    <button class="btn btn-primary mb-3" id="addContactBtn" onclick="toggleAddContactFields()">Add New Contact</button>
+                    <div id="addContactFields" style="display: none;">
+                        <h5 class="mb-3 fw-normal">Add New Contact</h5>
+                        <!-- Form for adding new contact... -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                            <label for="firstName">First Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                            <label for="lastName">Last Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="phone" placeholder="Phone" required>
+                            <label for="phone">Phone</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
+                            <label for="email">Email</label>
+                        </div>
+                        <button class="btn btn-lg btn-primary" type="button" onclick="addContact()">Add Contact</button>
+                    </div>
+                </div>
 
-            <!-- Display User Contacts -->
-            <ul id="userContacts" class="list-group">
-                <!-- Contacts will be displayed here -->
-            </ul>
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search Contacts"
+                        oninput="searchContacts()">
+                </div>
 
-            <!-- Add New Contact Section -->
-            <h2 class="h5 mb-3 fw-normal">Add New Contact</h2>
-            <div class="row g-2">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-                        <label for="firstName">First Name</label>
+                <!-- Display User Contacts -->
+                <div>
+                    <h5 class="mb-3 fw-normal">Contacts</h5>
+                    <div id="userContacts">
+                        <!-- Contacts will be displayed here -->
+                        <!-- Add more contacts here -->
                     </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-                        <label for="lastName">Last Name</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="phone" placeholder="Phone" required>
-                        <label for="phone">Phone</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required>
-                        <label for="email">Email</label>
-                    </div>
-                </div>
-                <div class="col-md-auto">
-                    <button class="btn btn-lg btn-primary" type="button" onclick="addContact()">Add Contact</button>
                 </div>
             </div>
-
-            <!-- Logout Button -->
-            <button class="btn btn-danger mt-3" type="button" onclick="logout()">Log Out</button>
-        </form>
-    </main>
+        </div>
+    </div>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
-    <!-- Existing code for the switchForm function -->
-    <script>
-        // Add existing code for the switchForm function here
 
-        // Function to load user contacts on page load
+    <script>
         window.onload = function () {
             loadUserContacts();
             displayWelcomeMessage();
@@ -91,93 +209,88 @@
 
         let contacts = [];
 
-        // // Function to load and display user contacts
-        // function loadUserContacts() {
-        //     const userId = getCookie('userID');
-        //     return fetch(`http://138.197.77.6/LAMPAPI/SearchContacts.php`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ search: '', userId }),
-        //     })
-        //         .then(response => {
-        //             if (response.ok) {
-        //                 return response.json();
-        //             } else {
-        //                 throw new Error('Error fetching user contacts');
-        //             }
-        //         })
-        //         .then(data => {
-        //             contacts = data; // Store contacts in the global variable
-        //             displayUserContacts(contacts);
-        //         })
-        //         .catch(error => {
-        //             console.error('Error fetching user contacts:', error.message);
-        //         });
-        // }
-
-        // Function to load and display user contacts
-function loadUserContacts() {
-    const userId = getCookie('userID');
-    return fetch(`http://nugget-nation.xyz/LAMPAPI/SearchContacts.php`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ search: '', userId }),
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error fetching user contacts');
-            }
-        })
-        .then(data => {
-            contacts = data || []; // Ensure contacts is always an array
-            displayUserContacts(contacts);
-        })
-        .catch(error => {
-            console.error('Error fetching user contacts:', error.message);
-        });
-}
-
-        function displayUserContacts(contacts) {
-            const userContactsList = document.getElementById('userContacts');
-
-            if (contacts.length > 0) {
-                userContactsList.innerHTML = contacts.map(contact => (
-                    `<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>
-                                <span id="editFirstName_${contact.ID}">${contact.FirstName}</span>
-                                <span id="editLastName_${contact.ID}">${contact.LastName}</span>
-                            </h5>
-                            <p>Email: <span id="editEmail_${contact.ID}">${contact.Email}</span></p>
-                            <p>Phone: <span id="editPhone_${contact.ID}">${contact.Phone}</span></p>
-                        </div>
-                        <button class="btn btn-danger" onclick="deleteContact('${contact.FirstName}', '${contact.LastName}')">Delete</button>
-                        <button class="btn btn-primary" onclick="handleEditContact(${contact.ID})">Edit</button>
-                        <button class="btn btn-success" onclick="doneEditingContact(${contact.ID})" style="display: none;">Done Editing</button>
-                    </li>`
-                )).join('');
-            } else {
-                userContactsList.innerHTML = '<li class="list-group-item">No contacts found.</li>';
-            }
+        function loadUserContacts() {
+            const userId = getCookie('userID');
+            return fetch(`http://nugget-nation.xyz/LAMPAPI/SearchContacts.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ search: '', userId }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error fetching user contacts');
+                    }
+                })
+                .then(data => {
+                    contacts = data || [];
+                    displayUserContacts(contacts);
+                })
+                .catch(error => {
+                    console.error('Error fetching user contacts:', error.message);
+                });
         }
 
-        async function addContact() {
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
+function displayUserContacts(contacts) {
+    const userContactsList = document.getElementById('userContacts');
+
+    if (contacts.length > 0) {
+        userContactsList.innerHTML = contacts.map(contact => (
+            `<li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="contact-details">
+                    <h5>
+                        <span id="editFirstName_${contact.ID}">${contact.FirstName}</span>
+                        <span id="editLastName_${contact.ID}">${contact.LastName}</span>
+                    </h5>
+                    <p>
+                        <span id="editPhone_${contact.ID}" class="me-3">Phone: ${contact.Phone}</span>
+                        <span id="editEmail_${contact.ID}">Email: ${contact.Email}</span>
+                    </p>
+                </div>
+                <div class="contact-buttons">
+                    <button class="btn btn-danger" onclick="deleteContact('${contact.FirstName}', '${contact.LastName}')">Delete</button>
+                    <button class="btn btn-primary" id="editBtn_${contact.ID}" onclick="handleEditContact(${contact.ID})">Edit</button>
+                    <button class="btn btn-success" id="doneEditBtn_${contact.ID}" onclick="doneEditingContact(${contact.ID})" style="display: none;">Done Editing</button>
+                </div>
+            </li>`
+        )).join('');
+    } else {
+        userContactsList.innerHTML = '<li class="list-group-item">No contacts found.</li>';
+    }
+}
+
+        
+
+async function addContact() {
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const phoneInput = document.getElementById('phone');
+    const emailInput = document.getElementById('email');
     const userId = getCookie('userID');
+
+    // Reset styles and labels
+    resetFormStyles();
+
+    // Check for null or empty fields
+    if (!firstNameInput.value || !lastNameInput.value || !phoneInput.value || !emailInput.value) {
+        alert('Please fill in all fields before adding a contact.');
+        highlightRequiredFields();
+        return;
+    }
+
+    const firstName = firstNameInput.value;
+    const lastName = lastNameInput.value;
+    const phone = phoneInput.value;
+    const email = emailInput.value;
 
     const isDuplicate = isDuplicateContact(firstName, lastName, contacts);
 
     if (isDuplicate) {
         console.log('Duplicate contact. Not adding.');
+        alert('Duplicate contact, registration unsuccessful');
         return;
     }
 
@@ -194,70 +307,115 @@ function loadUserContacts() {
     if (response.ok) {
         console.log('Contact added successfully:', data);
         loadUserContacts();
+        // After adding contact, hide the fields and reset styles
+        resetFormStyles();
+        const addContactFields = document.getElementById('addContactFields');
+        const addContactBtn = document.getElementById('addContactBtn');
+        addContactFields.style.display = 'none';
+        addContactBtn.textContent = 'Add New Contact';
     } else {
         console.error('Error adding contact:', data.error);
     }
 }
 
+function resetFormStyles() {
+    const requiredFields = ['firstName', 'lastName', 'phone', 'email'];
 
-// Function to check if a contact is a duplicate
-function isDuplicateContact(firstName, lastName, existingContacts) {
-    if (!Array.isArray(existingContacts)) {
-        existingContacts = [];
-    }
+    requiredFields.forEach(fieldName => {
+        const inputElement = document.getElementById(fieldName);
+        const labelElement = document.querySelector(`label[for="${fieldName}"]`);
 
-    return existingContacts.some(contact => {
-        return (
-            contact.FirstName.toLowerCase() === firstName.toLowerCase() &&
-            contact.LastName.toLowerCase() === lastName.toLowerCase()
-        );
+        // Reset the field styles
+        inputElement.style.borderColor = '';
+        
+        // Remove the asterisk from the label
+        if (labelElement) {
+            labelElement.innerHTML = labelElement.innerHTML.replace(/<span style="color: red;">\*<\/span>/, '');
+        }
     });
 }
 
 
-        function editContact(contact) {
-            console.log('Editing contact:', contact);
-            document.getElementById('updateFirstName').value = contact.FirstName;
-            document.getElementById('updateLastName').value = contact.LastName;
-            document.getElementById('updatePhone').value = contact.Phone;
-            document.getElementById('updateEmail').value = contact.Email;
-        }
+function highlightRequiredFields() {
+    const requiredFields = ['firstName', 'lastName', 'phone', 'email'];
 
-        async function updateContact() {
-            const updateFirstName = document.getElementById('updateFirstName').value;
-            const updateLastName = document.getElementById('updateLastName').value;
-            const updatePhone = document.getElementById('updatePhone').value;
-            const updateEmail = document.getElementById('updateEmail').value;
-            const userId = getCookie('userID');
+    requiredFields.forEach(fieldName => {
+        const inputElement = document.getElementById(fieldName);
+        const labelElement = document.querySelector(`label[for="${fieldName}"]`);
 
-            try {
-                const response = await fetch('http://nugget-nation.xyz/LAMPAPI/UpdateContacts.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        firstName: updateFirstName,
-                        lastName: updateLastName,
-                        phone: updatePhone,
-                        email: updateEmail,
-                        userId: userId,
-                    }),
-                });
+        // Highlight the field in red
+        inputElement.style.borderColor = 'red';
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Contact updated successfully:', data.result);
-                    loadUserContacts();
-                } else {
-                    console.error('Error updating contact:', response.statusText);
-                    const errorData = await response.text();
-                    console.error('Error updating contact:', errorData);
-                }
-            } catch (error) {
-                console.error('Error updating contact:', error.message);
+        // Add an asterisk to the label
+        if (labelElement) {
+            if (!labelElement.innerHTML.includes('*')) {
+                labelElement.innerHTML += ' <span style="color: red;">*</span>';
             }
         }
+    });
+}
+
+
+        function toggleAddContactFields() {
+        const addContactFields = document.getElementById('addContactFields');
+        const addContactBtn = document.getElementById('addContactBtn');
+
+        if (addContactFields.style.display === 'none') {
+            // Show fields
+            addContactFields.style.display = 'block';
+            addContactBtn.textContent = 'Cancel';
+        } else {
+            // Hide fields
+            addContactFields.style.display = 'none';
+            addContactBtn.textContent = 'Add New Contact';
+        }
+    }
+
+        function isDuplicateContact(firstName, lastName, existingContacts) {
+            if (!Array.isArray(existingContacts)) {
+                existingContacts = [];
+            }
+
+            return existingContacts.some(contact => {
+                return (
+                    contact.FirstName.toLowerCase() === firstName.toLowerCase() &&
+                    contact.LastName.toLowerCase() === lastName.toLowerCase()
+                );
+            });
+        }
+
+async function updateContact(contactDetails) {
+    const userId = getCookie('userID');
+
+    try {
+        const response = await fetch('http://nugget-nation.xyz/LAMPAPI/UpdateContacts.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...contactDetails,
+                userId: userId,
+                FirstName: contactDetails.FirstName, // Ensure uppercase property name
+                LastName: contactDetails.LastName,   // Ensure uppercase property name
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Contact updated successfully:', data.result);
+            loadUserContacts();
+        } else {
+            console.error('Error updating contact:', response.statusText);
+            const errorData = await response.text();
+            console.error('Error updating contact:', errorData);
+        }
+    } catch (error) {
+        console.error('Error updating contact:', error.message);
+    }
+}
+
+
 
         async function deleteContact(firstName, lastName) {
             const userId = getCookie('userID');
@@ -319,26 +477,6 @@ function isDuplicateContact(firstName, lastName, existingContacts) {
             return null;
         }
 
-        async function handleEditContact(contactID) {
-            const contactToEdit = await fetchContactByID(contactID);
-
-            if (contactToEdit) {
-                document.getElementById('updateFirstName').value = contactToEdit.FirstName;
-                document.getElementById('updateLastName').value = contactToEdit.LastName;
-                document.getElementById('updatePhone').value = contactToEdit.Phone;
-                document.getElementById('updateEmail').value = contactToEdit.Email;
-
-                const doneEditingBtn = document.getElementById('doneEditingBtn');
-                doneEditingBtn.style.display = 'block';
-
-                doneEditingBtn.onclick = function () {
-                    doneEditingContact(contactID);
-                };
-            } else {
-                console.error('Contact not found for editing:', contactID);
-            }
-        }
-
         async function fetchContactByID(contactID) {
             const userId = getCookie('userID');
 
@@ -374,23 +512,65 @@ function isDuplicateContact(firstName, lastName, existingContacts) {
             }
         }
 
-        function doneEditingContact(contactID) {
-    const updatedFirstName = document.getElementById(`editFirstName_${contactID}`).textContent;
-    const updatedLastName = document.getElementById(`editLastName_${contactID}`).textContent;
-    const updatedEmail = document.getElementById(`editEmail_${contactID}`).textContent;
-    const updatedPhone = document.getElementById(`editPhone_${contactID}`).textContent;
+        async function handleEditContact(contactID) {
+    const contactToEdit = await fetchContactByID(contactID);
 
-    updateContact({
-        ID: contactID,
-        FirstName: updatedFirstName,
-        LastName: updatedLastName,
-        Email: updatedEmail,
-        Phone: updatedPhone
+    if (contactToEdit) {
+        const editBtn = document.getElementById(`editBtn_${contactID}`);
+        const doneEditBtn = document.getElementById(`doneEditBtn_${contactID}`);
+
+        // Toggle between display and edit modes
+        toggleContactEditMode(contactID, contactToEdit, editBtn, doneEditBtn);
+    } else {
+        console.error('Contact not found for editing:', contactID);
+    }
+}
+
+        function toggleContactEditMode(contactID, contactToEdit, editBtn, doneEditBtn) {
+    const fields = ['FirstName', 'LastName', 'Phone', 'Email'];
+
+    fields.forEach(field => {
+        const element = document.getElementById(`edit${field}_${contactID}`);
+        const value = contactToEdit[field];
+
+        element.innerHTML = `<input type="text" id="edit${field}Input_${contactID}" value="${value}">`;
     });
 
-    const successBtn = document.querySelector(`#userContacts li button.btn-success`);
-    if (successBtn) {
-        successBtn.style.display = 'none';
+    editBtn.style.display = 'none';
+    doneEditBtn.style.display = 'block';
+
+    doneEditBtn.onclick = function () {
+        const updatedContactDetails = {
+            ID: contactID,
+            FirstName: document.getElementById(`editFirstNameInput_${contactID}`).value,
+            LastName: document.getElementById(`editLastNameInput_${contactID}`).value,
+            Phone: document.getElementById(`editPhoneInput_${contactID}`).value,
+            Email: document.getElementById(`editEmailInput_${contactID}`).value,
+        };
+
+        updateContact(updatedContactDetails);
+
+        // Reset the display to the updated values
+        fields.forEach(field => {
+            const element = document.getElementById(`edit${field}_${contactID}`);
+            element.innerHTML = updatedContactDetails[field];
+        });
+
+        // Toggle the buttons back
+        editBtn.style.display = 'block';
+        doneEditBtn.style.display = 'none';
+    };
+}
+
+        async function doneEditingContact(contactID) {
+    const contactToEdit = await fetchContactByID(contactID);
+
+    if (contactToEdit) {
+        const editBtn = document.getElementById(`editBtn_${contactID}`);
+        const doneEditBtn = document.getElementById(`doneEditBtn_${contactID}`);
+
+        // Toggle between display and edit modes
+        toggleContactEditMode(contactID, contactToEdit, editBtn, doneEditBtn);
     }
 }
 
@@ -409,7 +589,7 @@ function isDuplicateContact(firstName, lastName, existingContacts) {
 
                 if (response.ok) {
                     const data = await response.json();
-                    contacts = data;
+                    contacts = data || [];
                     displayUserContacts(contacts);
                 } else {
                     console.error('Error searching contacts:', response.statusText);
